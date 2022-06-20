@@ -16,7 +16,7 @@ Docker предусматривает утилиты и платформу дл�
 
 Docker упрощает цикл разработки, позволяя разработчику работать в стандартизированной среде на локальном контейнере, что поставляет ваши приложения и сервисы. Контейнеры идеальны для работы CI/DI[^2].
 
-[^2]: CI/DI (непрерывная интеграция и непрерывная поставка) - это методология разработки и набор практик, при которых в код вносятся небольшие изменения с частыми коммитами. [Подробнее в статье](https://habr.com/ru/company/otus/blog/515078/)
+[^2]: CI/DI (непрерывная интеграция и непрерывная поставка) - это методология разработки и набор практик, при которых в код вносятся небольшие изменения с частыми коммитами.Подробнее в [статье](https://habr.com/ru/company/otus/blog/515078/)
 
 Рассмотрите следующие примеры ситуаций:
  - Ваши разработчики пишут код локально и делятся им с коллегами с помощью Docker контейноров.
@@ -24,37 +24,41 @@ Docker упрощает цикл разработки, позволяя разр
  - Когда разработчики находят дефекты, они могут исправить их в среде разработки и развернуть еще раз в тестовом контуре для тестирования и проверки.
  - Когда тестирование завершено, отправка патча так же проста, что и развертывание образа на продуктовой среде.
  
-### Адаптивная разрабтка и масштабирование
+### Адаптивная разработка и масштабирование
 
-Docker’s container-based platform allows for highly portable workloads. Docker containers can run on a developer’s local laptop, on physical or virtual machines in a data center, on cloud providers, or in a mixture of environments.
+Платформа на основе контейнеров Docker обеспечивает высокую переносимость нагрузки. Контейнеры могут быть запущены на локальном компьютере разработчика, на физических или виртуальных машинах в дата-центре, облаке или ~~смечи~~ этих сред.
 
-Docker’s portability and lightweight nature also make it easy to dynamically manage workloads, scaling up or tearing down applications and services as business needs dictate, in near real time.
+Потративность и легковесность Docker упрощает динамическое управление нагрузкой, расширение или ~~разделение~~ приложений и сервисов в соответствие с нуждами бизнеса в реальном времени.
 
-Running more workloads on the same hardware
+### Запуск большей нагрузки на одном ~~сервере~~
 
-Docker is lightweight and fast. It provides a viable, cost-effective alternative to hypervisor-based virtual machines, so you can use more of your compute capacity to achieve your business goals. Docker is perfect for high density environments and for small and medium deployments where you need to do more with fewer resources.
+Docker быстр и легковесен. Он предлагает ~~работоспособную~~ и затрато-эффективную альтернативу ~~мониторинговым~~ виртуальным машинам, поэтому вы можете использовать большую вычислительную мощность для достижения своей бизнес-цели. Docker идеально подходит для ~~нагруженных~~ сред и маленьких или средних развертываний, где требуется сделать большее, но с меньшими ресурсами. 
 
-### Running more workloads on the same hardware
+## Архитектура Docker
 
-Docker is lightweight and fast. It provides a viable, cost-effective alternative to hypervisor-based virtual machines, so you can use more of your compute capacity to achieve your business goals. Docker is perfect for high density environments and for small and medium deployments where you need to do more with fewer resources.
+Docker использует ~~модель~~ клиент-сервер. Клиент Docker-а обращается к службе, что управляет поднятием тяжелых сборок, их запуском и ~~распределением~~ контейнеров. Клиент и служба могут быть запущены в одной системе или удаленно. Они взаимодействуют с помощью REST[^3] API, через сокеты UNIX[^4] или сетевой интерфейс. Еще один вид Docker клиента - Docker Compose, что позволяет вам работать с приложениями, состоящими из набора контейноров.
 
-## Docker architecture
-Docker uses a client-server architecture. The Docker client talks to the Docker daemon, which does the heavy lifting of building, running, and distributing your Docker containers. The Docker client and daemon can run on the same system, or you can connect a Docker client to a remote Docker daemon. The Docker client and daemon communicate using a REST API, over UNIX sockets or a network interface. Another Docker client is Docker Compose, that lets you work with applications consisting of a set of containers.
+[^3]: REST API (Representational State Transfer) -  архитектурный стиль взаимодействия компонентов распределённого приложения в сети. Подробнее в [статье](https://habr.com/ru/post/483202/).
+[^4]: UNIX - 
+
 ![Docker Architecture Diagram](https://docs.docker.com/engine/images/architecture.svg)
 
-## The Docker daemon
-The Docker daemon (dockerd) listens for Docker API requests and manages Docker objects such as images, containers, networks, and volumes. A daemon can also communicate with other daemons to manage Docker services.
+## Docker daemon
 
-## The Docker client
-The Docker client (docker) is the primary way that many Docker users interact with Docker. When you use commands such as docker run, the client sends these commands to dockerd, which carries them out. The docker command uses the Docker API. The Docker client can communicate with more than one daemon.
+Служба Docker (dockerd) ~~прослушивает~~ запросы Docker API requests и управляет такими объектами, как: образы, контейнеры, сети и ~~файловые хранилища~~. Также она взаимодействует с другими службами для управления Docker сервисами.
+
+## Docker Client
+
+Клиент Docker (docker) это основной способ взаимодействия множества пользователей. Когда вы используете команды, например, `docker run`, клиент отправляет их для выполнения в [dockerd](https://github.com/gfg7/docker-docs-rus/edit/draft/docs/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20Docker.md#%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-docker). Команды используют Docker API. Клиент может взаимодействовать с несколькими службами.
 
 ## Docker Desktop
-Docker Desktop is an easy-to-install application for your Mac or Windows environment that enables you to build and share containerized applications and microservices. Docker Desktop includes the Docker daemon (dockerd), the Docker client (docker), Docker Compose, Docker Content Trust, Kubernetes, and Credential Helper. For more information, see Docker Desktop.
 
-## Docker registries
-A Docker registry stores Docker images. Docker Hub is a public registry that anyone can use, and Docker is configured to look for images on Docker Hub by default. You can even run your own private registry.
+Настольный Docker легок для установки на Mac или Windows средах, что позволяет вам собирать и делиться упакованными в контейнер приложениями и сервисами. Натольный Docker включает в себя службу Docker ([dockerd](https://github.com/gfg7/docker-docs-rus/edit/draft/docs/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20Docker.md#%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-docker)), Docker клиента ([docker](https://github.com/gfg7/docker-docs-rus/edit/draft/docs/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20Docker.md#docker-client)), Docker Compose, Docker Content Trust, Kubernetes и Credential Helper. Подробная информация в статье [Docker Desktop]().
 
-When you use the docker pull or docker run commands, the required images are pulled from your configured registry. When you use the docker push command, your image is pushed to your configured registry.
+## Docker реестры
+Реестр Docker предназначени для хранения образов. Docker Hub - это открытый реестр для общего пользования, также является дефолтным при поиске образов в Docker. Есть возможность запуска собственного приватного реестра.
+
+Когда вы используете `docker pull` или `docker run`, нужные образы импортируются из настроенного вами реестра. При использовании команды `docker push` ваш образ экспортируется в ваш приватны реестр.
 
 ## Docker objects
 When you use Docker, you are creating and using images, containers, networks, volumes, plugins, and other objects. This section is a brief overview of some of those objects.
