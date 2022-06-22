@@ -45,59 +45,51 @@ Docker использует ~~модель~~ клиент-сервер. Клие
 
 ## Docker daemon
 
-Служба Docker (dockerd) ~~прослушивает~~ запросы Docker API requests и управляет такими объектами, как: образы, контейнеры, сети и ~~файловые хранилища~~. Также она взаимодействует с другими службами для управления Docker сервисами.
+Служба Docker (`dockerd`) ~~прослушивает~~ запросы Docker API requests и управляет такими объектами, как: образы, контейнеры, сети и ~~файловые хранилища~~. Также она взаимодействует с другими службами для управления Docker сервисами.
 
 ## Docker Client
 
-Клиент Docker (docker) это основной способ взаимодействия множества пользователей. Когда вы используете команды, например, `docker run`, клиент отправляет их для выполнения в [dockerd](https://github.com/gfg7/docker-docs-rus/edit/draft/docs/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20Docker.md#%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-docker). Команды используют Docker API. Клиент может взаимодействовать с несколькими службами.
+Клиент Docker (`docker`) это основной способ взаимодействия множества пользователей. Когда вы используете команды, например, `docker run`, клиент отправляет их для выполнения в [`dockerd`](https://github.com/gfg7/docker-docs-rus/edit/draft/docs/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20Docker.md#%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-docker). Команды используют Docker API. Клиент может взаимодействовать с несколькими службами.
 
 ## Docker Desktop
 
-Настольный Docker легок для установки на Mac или Windows средах, что позволяет вам собирать и делиться упакованными в контейнер приложениями и сервисами. Натольный Docker включает в себя службу Docker ([dockerd](https://github.com/gfg7/docker-docs-rus/edit/draft/docs/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20Docker.md#%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-docker)), Docker клиента ([docker](https://github.com/gfg7/docker-docs-rus/edit/draft/docs/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20Docker.md#docker-client)), Docker Compose, Docker Content Trust, Kubernetes и Credential Helper. Подробная информация в статье [Docker Desktop]().
+Настольный Docker легок для установки на Mac или Windows средах, что позволяет вам собирать и делиться упакованными в контейнер приложениями и сервисами. Натольный Docker включает в себя службу Docker ([`dockerd`](https://github.com/gfg7/docker-docs-rus/edit/draft/docs/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20Docker.md#%D1%81%D0%BB%D1%83%D0%B6%D0%B1%D0%B0-docker)), Docker клиента ([`docker`](https://github.com/gfg7/docker-docs-rus/edit/draft/docs/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80%20Docker.md#docker-client)), Docker Compose, Docker Content Trust, Kubernetes и Credential Helper. Подробная информация в статье [Docker Desktop]().
 
 ## Docker реестры
 Реестр Docker предназначени для хранения образов. Docker Hub - это открытый реестр для общего пользования, также является дефолтным при поиске образов в Docker. Есть возможность запуска собственного приватного реестра.
 
 Когда вы используете `docker pull` или `docker run`, нужные образы импортируются из настроенного вами реестра. При использовании команды `docker push` ваш образ экспортируется в ваш приватны реестр.
 
-## Docker objects
-When you use Docker, you are creating and using images, containers, networks, volumes, plugins, and other objects. This section is a brief overview of some of those objects.
+## Объекты Docker
+Когда вы работаете с Docker, вы создаете и используете образы, контейнеры, сети, ~~файловые хранилища~~, плагины и другие объекты. Эта секция посвящена быстрому обзору некоторых объектов. 
 
-### Images
-An image is a read-only template with instructions for creating a Docker container. Often, an image is based on another image, with some additional customization. For example, you may build an image which is based on the ubuntu image, but installs the Apache web server and your application, as well as the configuration details needed to make your application run.
+### Образы
+Образ - это читаемый шаблон с инструкциями для создания Docker контейнера. Часто, он может базироваться на другом образе с некоторыми настраиваемыми добавлениями. Например, ым собираете образ, что был основан на образе `ubuntu`, но также устанавливает Apache web server и ваше приложение вместе с конфигурацией, необходимой для запуска.
 
-You might create your own images or you might only use those created by others and published in a registry. To build your own image, you create a Dockerfile with a simple syntax for defining the steps needed to create the image and run it. Each instruction in a Dockerfile creates a layer in the image. When you change the Dockerfile and rebuild the image, only those layers which have changed are rebuilt. This is part of what makes images so lightweight, small, and fast, when compared to other virtualization technologies.
+Вы можете создавать свои собственные образы или использовать чужие, что были опубликованы в реестре. Для его сборки, вам требуется составить Dockerfile с простым синтаксисом для определения шагов, необходимых для создания образа и его запуска. Каждая инструкция в Dockerfile создает новый слой образа. Когда вы изменяете Dockerfile и пересобираете образ, пересоздаются только отредактированные слои. Вот что делает образы такими легковесными, маленькими и быстрыми в сравнении с другими технологиями виртуализации.
 
-### Containers
-A container is a runnable instance of an image. You can create, start, stop, move, or delete a container using the Docker API or CLI. You can connect a container to one or more networks, attach storage to it, or even create a new image based on its current state.
+### Контейнеры
+Контейнер - это запускаемая единица образа. Вы можете создавать, запускать, останавливать, перпемещать или удалять контейнер с помощью Docker API или CLI. Вы можете соединять контейнер к более. чем одной, сети, прикреплять к нему хранилище или даже создавать новый образ на основе его текущего состояния.
 
-By default, a container is relatively well isolated from other containers and its host machine. You can control how isolated a container’s network, storage, or other underlying subsystems are from other containers or from the host machine.
+Контейнеры по умолчанию относительно хорошо изолированы от друг друга и хоста, на котором запущены. Вы можете контролировать изолированность сети, хранилища или других прилегающих подсистем от остальных контейнеров и хоста.
 
-A container is defined by its image as well as any configuration options you provide to it when you create or start it. When a container is removed, any changes to its state that are not stored in persistent storage disappear.
+Контейнер определяется своим образом и любой конфигурацией, что вы настроили на момент создания или запуска. Когда контейнер удаляют, любые изменения его состояния, что не хранятся в постоянном хранилище, стираются.
 
-### Example docker run command
-The following command runs an ubuntu container, attaches interactively to your local command-line session, and runs /bin/bash.
+### Пример команды `docker run`
+Следующая команда запускает `ubuntu` контейнер через `/bin/bash`, ~~интерактивно~~ прикреплясь к вашей локальной сессии командной строки:
 
- docker run -i -t ubuntu /bin/bash
-When you run this command, the following happens (assuming you are using the default registry configuration):
+ > `$ docker run -i -t ubuntu /bin/bash`
+ 
+ Когда вы запускаете эту команду, происходит следующее (предполагая, что используется конфигурация реестра по умолчанию):
 
-If you do not have the ubuntu image locally, Docker pulls it from your configured registry, as though you had run docker pull ubuntu manually.
+1. Если у вас нет локального образа ubuntu, Docker вытягивает его из сконфигурированного вами реестра, как если бы вы вручную запустили `docker pull ubuntu`.
+2. Docker создает новый контейнер, как с помощью команды `docker container create`.
+3. Docker назначает контейнеру файловую систему для чтения/записи, как финальный слой. Это позволяет запущенному контейнеру создавать или редактировать файлы и директории своего локального хранилища.
+4. Docker создает сетевой интерфейс для соединения контейнера с сетью по умолчанию, т.к. вы не указали специальные сетевые настройки. Это также включает в себя назначение IP адреса. По умолчанию, контейнеры могут обращаться к внешним сетям с помощью сетевого соединения хоста.
+5. Docker запускает контейнер и исполняет `/bin/bash`. Т.к. контейнер запускается интерактивно и прикрепляется к вашему терминалу (из-за флагов `-i` и `-t`), вы можете вводить команды с помощью клавиатуры, а вывод будет логгироваться в вагем терминале.
+6. Когды вы печатаете `exit` для остановки команды `/bin/bash`, контейнер останавливается, но не удаляется. Вы можете перезапустить или стереть его.
 
-Docker creates a new container, as though you had run a docker container create command manually.
+## ~~Используемые~~ технологии
+Docker разработан на языке [Go](https://go.dev/) и использует преимущества некоторых функций ядра Linux для обеспечения его функциональности. Технология, называемая `namespaces`, позволяет создавать изолированные пространства - контейнеры. Когда вы запускаете контейнер, Docker создает для него набор пространств.
 
-Docker allocates a read-write filesystem to the container, as its final layer. This allows a running container to create or modify files and directories in its local filesystem.
-
-Docker creates a network interface to connect the container to the default network, since you did not specify any networking options. This includes assigning an IP address to the container. By default, containers can connect to external networks using the host machine’s network connection.
-
-Docker starts the container and executes /bin/bash. Because the container is running interactively and attached to your terminal (due to the -i and -t flags), you can provide input using your keyboard while the output is logged to your terminal.
-
-When you type exit to terminate the /bin/bash command, the container stops but is not removed. You can start it again or remove it.
-
-## The underlying technology
-Docker is written in the Go programming language and takes advantage of several features of the Linux kernel to deliver its functionality. Docker uses a technology called namespaces to provide the isolated workspace called the container. When you run a container, Docker creates a set of namespaces for that container.
-
-These namespaces provide a layer of isolation. Each aspect of a container runs in a separate namespace and its access is limited to that namespace.
-
-## Next steps
-Read about installing Docker.
-Get hands-on experience with the Getting started with Docker tutorial.
+Эти пространства создают слой изоляции. Каждый аспект контейнера запущен в отдельном пространстве и имеет к нему ограниченный доступ.
